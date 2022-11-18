@@ -202,4 +202,6 @@ output "cluster_name" {
   value       = local.cluster_name
 }
 ```
+## Initialize Terraform workspace
+
 
