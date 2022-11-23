@@ -30,7 +30,81 @@ This file allows us to set passwords for the MySQL database. The resources secti
 
 The next file is `mysql-deployment.yaml`.
 ```console
-
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-mysql
+  labels:
+    app: wordpress
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: wordpress
+    tier: mysql
+  clusterIP: None
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: wordpress
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: managed-csi
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress-mysql
+  labels:
+    app: wordpress
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:8.0.30
+        name: mysql
+        env:
+        - name: MYSQL_DATABASE
+          value: wordpressdb
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        - name: MYSQL_USER
+          value: mysqluser
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
 ```
 This file will deploy a pod with a MySQL container. There are three objects defined. The first object is a Service object. This will create a service called wordpress-mysql. This service will be assigned to be the front end to the MySQL pod through the use of a selector. Therefore, whenever a pod within the cluster wants to communicate with the MySQL pod, it will communicate using the wordpress-mysql service name.
 
@@ -40,7 +114,79 @@ The last object created (line 30) is a Deployment. Inside the deployment spec (l
 
 The last file is `wordpress-deployment.yaml` which is shown below.
 ```console
-
+apiVersion: v1                                                                                                                              
+kind: Service                                                                                                                               
+metadata:                                                                                                                                   
+  name: wordpress                                                                                                                           
+  labels:                                                                                                                                   
+    app: wordpress                                                                                                                          
+spec:                                                                                                                                       
+  ports:                                                                                                                                    
+    - port: 80                                                                                                                              
+  selector:                                                                                                                                 
+    app: wordpress                                                                                                                          
+    tier: frontend                                                                                                                          
+  type: LoadBalancer                                                                                                                        
+  loadBalancerSourceRanges: ["0.0.0.0/0"]                                                                                                   
+---                                                                                                                                         
+apiVersion: v1                                                                                                                              
+kind: PersistentVolumeClaim                                                                                                                 
+metadata:                                                                                                                                   
+  name: wp-pv-claim                                                                                                                         
+  labels:                                                                                                                                   
+    app: wordpress                                                                                                                          
+spec:                                                                                                                                       
+  accessModes:                                                                                                                              
+    - ReadWriteOnce                                                                                                                         
+  storageClassName: gp2                                                                                                             
+  resources:                                                                                                                                
+    requests:                                                                                                                               
+      storage: 5Gi                                                                                                                         
+---                                                                                                                                         
+apiVersion: apps/v1                                                                                                                         
+kind: Deployment                                                                                                                            
+metadata:                                                                                                                                   
+  name: wordpress                                                                                                                           
+  labels:                                                                                                                                   
+    app: wordpress                                                                                                                          
+spec:                                                                                                                                       
+  selector:                                                                                                                                 
+    matchLabels:                                                                                                                            
+      app: wordpress                                                                                                                        
+      tier: frontend                                                                                                                        
+  strategy:                                                                                                                                 
+    type: Recreate                                                                                                                          
+  template:                                                                                                                                 
+    metadata:                                                                                                                               
+      labels:                                                                                                                               
+        app: wordpress                                                                                                                      
+        tier: frontend                                                                                                                      
+    spec:                                                                                                                                   
+      containers:                                                                                                                           
+      - image: wordpress:6.0.2-apache                                                                                                       
+        name: wordpress                                                                                                                     
+        env:                                                                                                                                
+        - name: WORDPRESS_DB_HOST                                                                                                           
+          value: wordpress-mysql                                                                                                            
+        - name: WORDPRESS_DB_PASSWORD                                                                                                       
+          valueFrom:                                                                                                                        
+            secretKeyRef:                                                                                                                   
+              name: mysql-pass                                                                                                              
+              key: password                                                                                                                 
+        - name: WORDPRESS_DB_NAME                                                                                                           
+          value: wordpressdb                                                                                                                
+        - name: WORDPRESS_DB_USER                                                                                                           
+          value: mysqluser                                                                                                                  
+        ports:                                                                                                                              
+        - containerPort: 80                                                                                                                 
+          name: wordpress                                                                                                                   
+        volumeMounts:                                                                                                                       
+        - name: wordpress-persistent-storage                                                                                                
+          mountPath: /var/www/html                                                                                                          
+      volumes:                                                                                                                              
+      - name: wordpress-persistent-storage                                                                                                  
+        persistentVolumeClaim:                                                                                                              
+          claimName: wp-pv-claim
 ```
 Similar to the MySQL yaml, this file creates three objects. First, there is a Service object (line 2) that is named wordpress (line 4). This service exposes port 80 (line 9) and has its type set to LoadBalancer.
 
