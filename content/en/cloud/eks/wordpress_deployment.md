@@ -3,7 +3,7 @@ processors : ["Neoverse-N1"]
 software : ["linux"]
 title: "Deploy WordPress example"
 type: docs
-weight: 4
+weight: 3
 hide_summary: true
 description: >
     Learn how to deploy WordPress example.
