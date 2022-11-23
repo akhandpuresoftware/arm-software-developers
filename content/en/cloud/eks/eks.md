@@ -249,4 +249,25 @@ Run `terraform apply` to apply the execution plan to your cloud infrastructure. 
   terraform apply
 ```
 
+### Configure kubectl
+```console
+aws eks --region $(terraform output region) update-kubeconfig --name $(terraform output cluster_name)
+```
+
+Run the following command to see the status of the nodes. They should be in the ready state.
+```console
+kubectl get nodes
+```
+
+..........................................................
+
+Run the following command to see the current pods running on the cluster.
+```console
+kubectl get nodes
+```
+
+.........................................................
+
+Make sure that all of these services are in a running state as shown above.
+
 
