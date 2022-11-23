@@ -51,10 +51,10 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: managed-csi
+  storageClassName: gp2
   resources:
     requests:
-      storage: 20Gi
+      storage: 5Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -106,7 +106,7 @@ spec:
 ```
 This file will deploy a pod with a MySQL container. There are three objects defined. The first object is a Service object. This will create a service called wordpress-mysql. This service will be assigned to be the front end to the MySQL pod through the use of a selector. Therefore, whenever a pod within the cluster wants to communicate with the MySQL pod, it will communicate using the wordpress-mysql service name.
 
-The next object defined (line 16) is a Persistent Volume Claim (PVC). This object is used to mount storage inside the MySQL pod. A key point to understand is that the PVC object is not what creates the storage. It is a declaration of a type of storage that we want available to the cluster. As shown above, we are declaring that we need 20GiB of storage.
+The next object defined (line 16) is a Persistent Volume Claim (PVC). This object is used to mount storage inside the MySQL pod. A key point to understand is that the PVC object is not what creates the storage. It is a declaration of a type of storage that we want available to the cluster. As shown above, we are declaring that we need 5GiB of storage.
 
 The last object created (line 30) is a Deployment. Inside the deployment spec (line 35), we have some selector labels (lines 36-39). Notice that these labels match the labels in the Service object (lines 10-12). This match is what assigns the wordpress-mysql service to the MySQL pod. Within the deployment spec, there is also a pod spec (line 47), where we configure the MySQL container we want deployed in the pod.
 
@@ -195,7 +195,7 @@ The last object is a Deployment (line 31). In the pod spec (line 48), we set the
 ## WordPress Deployment
 Navigate to the directory that contains kustomization.yaml, mysql-deployment.yaml, and wordpress-deployment.yaml. Enter the following command to apply above configuration.
 ```console
-kubectl apply -k ./
+kubectl apply -k .
 ```
 It takes some time for everything to become ready. Let us first check on the volume claims by running the following command.
 ```console
