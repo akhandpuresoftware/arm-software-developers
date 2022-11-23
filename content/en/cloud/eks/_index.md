@@ -36,7 +36,7 @@ By the end of this learning path, you will be able to:
 | Type          | Content             |
 | ---           | ---                 |
 | Documentation | [Creating an AWS account](https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-creating.html) |
-| Documentation | [EKS DOcumentation](https://aws.amazon.com/eks/) |
+| Documentation | [EKS documentation](https://aws.amazon.com/eks/) |
 | Documentation | [Wordpress deployment Documentation](https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/) |
 
 
