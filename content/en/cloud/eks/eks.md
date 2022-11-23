@@ -16,7 +16,6 @@ description: >
 For this EKS deployment, the Terraform configuration is broken into 7 files: eks_cluster.tf, variables.tf, vpc.tf, security-groups.tf, main.tf, terraform.tf, output.tf
 
 **providers.tf** sets versions for the providers used by the configuration. Add the following code in this file: 
-
 ```console
 terraform {
   required_providers {
@@ -49,7 +48,6 @@ terraform {
 ```
 
 **variables.tf** contains a region variable that controls where to create the EKS cluster. Add the following code in this file:
-
 ```console
 variable "region" {
   description = "AWS region"
@@ -89,8 +87,7 @@ module "vpc" {
 }
 ```
 
-**security-groups.tf** provisions the security groups the EKS cluster will use.
-
+**security-groups.tf** provisions the security groups, the EKS cluster will use.
 ```console
 resource "aws_security_group" "node_group_one" {
   name_prefix = "node_group_one"
@@ -124,7 +121,6 @@ resource "aws_security_group" "node_group_two" {
 ```
 
 **eks-cluster.tf** uses the [AWS EKS Module](https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/11.0.0) to provision an EKS Cluster and other required resources, including Auto Scaling Groups, Security Groups, IAM Roles, and IAM Policies. Below parameter will create three nodes across two node groups.
-
 ```console
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
@@ -134,10 +130,10 @@ module "eks" {
   cluster_version = "1.22"
 
   vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  subnet_ids = module.vpc.public_subnets
 
   eks_managed_node_group_defaults = {
-    ami_type = "AL2_x86_64"
+    ami_type = "AL2_ARM_64"
     attach_cluster_primary_security_group = true
     # Disabling and using externally provided security groups
     create_security_group = false
@@ -174,8 +170,8 @@ module "eks" {
   }
 }
 ```
-**outputs.tf** defines the output values for this configuration.
 
+**outputs.tf** defines the output values for this configuration.
 ```console
 output "cluster_id" {
   description = "EKS cluster ID"
@@ -202,6 +198,55 @@ output "cluster_name" {
   value       = local.cluster_name
 }
 ```
-## Initialize Terraform workspace
+
+Add below code in **main.tf**
+
+```console
+provider "kubernetes" {
+  host                   = module.eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+}
+
+provider "aws" {
+  region = var.region
+}
+
+data "aws_availability_zones" "available" {}
+
+locals {
+  cluster_name = "demo-eks-${random_string.suffix.result}"
+}
+
+resource "random_string" "suffix" {
+  length  = 8
+  special = false
+}
+```
+
+## Terraform commands
+### Initialize Terraform
+Run `terraform init` to initialize the Terraform deployment. This command downloads the AWSe modules required to manage your AWS resources.
+```console
+terraform init
+```
+.....................
+
+### Create a Terraform execution plan
+Run `terraform plan` to create an execution plan.
+```console
+terraform plan
+```
+
+**Key points:**
+
+* The **terraform plan** command is optional. We can directly run **terraform apply** command. But it is always better to check the resources about to be created.
+* The terraform plan command creates an execution plan, but doesn't execute it. Instead, it determines what actions are necessary to create the configuration specified in your configuration files. This pattern allows you to verify whether the execution plan matches your expectations before making any changes to actual resources.
+
+### Apply Terraform execution plan
+
+Run `terraform apply` to apply the execution plan to your cloud infrastructure. Below command creates all required infrastructure.
+```
+  terraform apply
+```
 
 
