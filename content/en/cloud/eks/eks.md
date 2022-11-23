@@ -229,7 +229,7 @@ Run `terraform init` to initialize the Terraform deployment. This command downlo
 ```console
 terraform init
 ```
-.....................
+![MicrosoftTeams-image (4)](https://user-images.githubusercontent.com/87687468/203512908-be62b51f-ed17-4d48-bc43-4190080e05ef.png)
 
 ### Create a Terraform execution plan
 Run `terraform plan` to create an execution plan.
@@ -248,6 +248,7 @@ Run `terraform apply` to apply the execution plan to your cloud infrastructure. 
 ```
   terraform apply
 ```
+![image-2](https://user-images.githubusercontent.com/87687468/203513200-14bdb5e8-12c7-41f0-8878-b4ae6bc3aa9f.png)
 
 ### Configure kubectl
 ```console
@@ -258,15 +259,13 @@ Run the following command to see the status of the nodes. They should be in the 
 ```console
 kubectl get nodes
 ```
-
-..........................................................
+![get_nodes](https://user-images.githubusercontent.com/87687468/203513615-0f316d24-586d-4452-a220-33f1a9b5a8b6.png)
 
 Run the following command to see the current pods running on the cluster.
 ```console
-kubectl get nodes
+kubectl get pods
 ```
-
-.........................................................
+![get_pods](https://user-images.githubusercontent.com/87687468/203513853-704731f2-1a2a-4278-95d4-2af438c3ffd3.png)
 
 Make sure that all of these services are in a running state as shown above.
 
