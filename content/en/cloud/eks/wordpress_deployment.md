@@ -1,6 +1,4 @@
 ---
-processors : ["Neoverse-N1"]
-software : ["linux"]
 title: "Deploy WordPress example"
 type: docs
 weight: 3
