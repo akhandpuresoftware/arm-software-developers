@@ -79,4 +79,4 @@ At this point, we can point a browser to the external IP address (in this case, 
 
 ![image](https://user-images.githubusercontent.com/87687468/203516285-2e700357-0adb-4520-9fcc-ae22444529a2.png)
 
-
+[<-- Return to Learning Path](/content/en/cloud/eks/#sections)
