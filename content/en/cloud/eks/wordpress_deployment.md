@@ -42,7 +42,6 @@ The last file is `wordpress-deployment.yaml` which is shown below.
 ```console
 
 ```
-
 Similar to the MySQL yaml, this file creates three objects. First, there is a Service object (line 2) that is named wordpress (line 4). This service exposes port 80 (line 9) and has its type set to LoadBalancer.
 
 The second object is a PVC (line 17). This is similar to what was explained for the MySQL yaml.
@@ -54,34 +53,30 @@ Navigate to the directory that contains kustomization.yaml, mysql-deployment.yam
 ```console
 kubectl apply -k ./
 ```
-
 It takes some time for everything to become ready. Let us first check on the volume claims by running the following command.
 ```console
 kubectl get pvc
 ```
-
 Eventually the volume claims will be bounded to the cluster and appear similar to the image below.
 
-........................................
+![image](https://user-images.githubusercontent.com/87687468/203515130-83c5604b-fc85-49e9-8f1a-1da2f00066b6.png)
 
 Next, we can check on the WordPress and MySQL pods by running the following command.
 ```console
 kubectl get pods
 ```
-
 It may take a little while for the pods to be created and get into the running state. Eventually the pods should look like the image below.
 
-.................................................
+![image](https://user-images.githubusercontent.com/87687468/203515032-0d6bd00f-068a-4848-b3f9-75e86e895ec9.png)
 
-Now that the pods are running, we can verify that the persistent volumes have been attached by running the following command.
+To verify WordPress is working, we can connect to WordPress through a browser. To get the external IP address of the WordPress deployment run the following command.
 ```console
-kubectl get volumeattachments
+kubectl get svc
 ```
-We should see the entry for ATTACHED to be set to true as shown below. This setting means the storage is mounted inside the pods at the mount point declared in the pod specs.
+![image](https://user-images.githubusercontent.com/87687468/203515908-db800aa4-602c-4e80-ae70-d7fc44c8e16b.png)
 
-............................................
+At this point, we can point a browser to the external IP address (in this case, it's 3.145.125.76) and see the WordPress welcome screen as shown below.
 
-Verify that the Service is running by running the following command:
-```console
-kubectl get services wordpress
-```
+![image](https://user-images.githubusercontent.com/87687468/203516285-2e700357-0adb-4520-9fcc-ae22444529a2.png)
+
+
