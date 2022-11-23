@@ -270,4 +270,4 @@ kubectl get nodes
 
 Make sure that all of these services are in a running state as shown above.
 
-
+[<-- Return to Learning Path](/content/en/cloud/eks/#sections)
