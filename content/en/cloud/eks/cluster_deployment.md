@@ -133,7 +133,8 @@ module "eks" {
   subnet_ids = module.vpc.public_subnets
 
   eks_managed_node_group_defaults = {
-    ami_type = "AL2_ARM_64"
+    ami           = "ami-0f69dd1d0d03ad669"
+    instance_type = "t4g.large"
     attach_cluster_primary_security_group = true
     # Disabling and using externally provided security groups
     create_security_group = false
@@ -198,9 +199,7 @@ output "cluster_name" {
   value       = local.cluster_name
 }
 ```
-
 Add below code in **main.tf**
-
 ```console
 provider "kubernetes" {
   host                   = module.eks.cluster_endpoint
