@@ -1,3 +1,4 @@
+---
 # ================================================================================
 #       Edit
 # ================================================================================
@@ -22,7 +23,7 @@ further_reading:
         type: documentation
     - resource:
         title: Wordpress deployment Documentation
-        link: [https://aws.amazon.com/blogs/aws/new-amazon-ec2-c7g-instances-powered-by-aws-graviton3-processors/](https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/)
+        link: https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
         type: Blog
 
 
@@ -32,3 +33,4 @@ further_reading:
 weight: 21                  # set to always be larger than the content in this path, and one more than 'review'
 title: "Next Steps"         # Always the same
 layout: "learningpathall"   # All files under learning paths have this same wrapper
+---
