@@ -18,12 +18,12 @@ recommended_path: "/learning-paths/cloud/migration/"
 
 further_reading:
     - resource:
-        title: Terraform docs for AWS
-        link: https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+        title: EKS documentation
+        link: https://aws.amazon.com/eks/
         type: documentation
     - resource:
-        title: Amazon EC2 C7g Instances, Powered by AWS Graviton3 Processors
-        link: https://aws.amazon.com/blogs/aws/new-amazon-ec2-c7g-instances-powered-by-aws-graviton3-processors/
+        title: Wordpress deployment Documentation
+        link: [https://aws.amazon.com/blogs/aws/new-amazon-ec2-c7g-instances-powered-by-aws-graviton3-processors/](https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/)
         type: Blog
 
 
