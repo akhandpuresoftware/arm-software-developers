@@ -94,30 +94,67 @@ resource "aws_security_group" "node_group_one" {
   name_prefix = "node_group_one"
   vpc_id      = module.vpc.vpc_id
 
-  ingress {
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
+  ingress = [
+    {
+      description      = "All traffic"
+      from_port        = 0    # All ports
+      to_port          = 0    # All Ports
+      protocol         = "-1" # All traffic
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = null
+      prefix_list_ids  = null
+      security_groups  = null
+      self             = null
+    }
+  ]
 
-    cidr_blocks = [
-      "10.0.0.0/8",
-    ]
-  }
+  egress = [
+    {
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
+      description      = "Outbound rule"
+      prefix_list_ids  = null
+      security_groups  = null
+      self             = null
+    }
+  ]
 }
+
 
 resource "aws_security_group" "node_group_two" {
   name_prefix = "node_group_two"
   vpc_id      = module.vpc.vpc_id
 
-  ingress {
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
+  ingress = [
+    {
+      description      = "All traffic"
+      from_port        = 0    # All ports
+      to_port          = 0    # All Ports
+      protocol         = "-1" # All traffic
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = null
+      prefix_list_ids  = null
+      security_groups  = null
+      self             = null
+    }
+  ]
 
-    cidr_blocks = [
-      "192.168.0.0/16",
-    ]
-  }
+  egress = [
+    {
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
+      description      = "Outbound rule"
+      prefix_list_ids  = null
+      security_groups  = null
+      self             = null
+    }
+  ]
 }
 ```
 
