@@ -104,7 +104,7 @@ spec:
         persistentVolumeClaim:
           claimName: mysql-pv-claim
 ```
-This file will deploy a pod with a MySQL container. There are three objects defined. The first object is a Service object. This will create a service called wordpress-mysql. This service will be assigned to be the front end to the MySQL pod through the use of a selector. Therefore, whenever a pod within the cluster wants to communicate with the MySQL pod, it will communicate using the wordpress-mysql service name.
+This file will deploy a pod with a MySQL container. There are three objects defined. The first object (line 2) is a Service object. This will create a service called wordpress-mysql. This service will be assigned to be the front end to the MySQL pod through the use of a selector. Therefore, whenever a pod within the cluster wants to communicate with the MySQL pod, it will communicate using the wordpress-mysql service name.
 
 The next object defined (line 16) is a Persistent Volume Claim (PVC). This object is used to mount storage inside the MySQL pod. A key point to understand is that the PVC object is not what creates the storage. It is a declaration of a type of storage that we want available to the cluster. As shown above, we are declaring that we need 5GiB of storage.
 
