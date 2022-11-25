@@ -25,8 +25,8 @@ learning_objectives:
 prerequisites:
     - An Amazon Web Services (AWS) account
     - Terraform
-    - The AWS CLI, [installed](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and [configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
-    - The [Kubernetes CLI](https://kubernetes.io/docs/tasks/tools/), also known as `kubectl`
+    - The AWS CLI
+    - The Kubernetes CLI also known as `kubectl`
 # List any prereqs needed before this learning path can be completed. Can include:
     # Online service accounts                                   (An Amazon Web Services account)
     # Prior knowledge                                           (Some familiarity with embedded programing)
