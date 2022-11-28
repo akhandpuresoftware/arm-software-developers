@@ -12,7 +12,7 @@ description: >
 * [AWS IAM authenticator](https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html)
 * [Kubernetes CLI](https://kubernetes.io/docs/tasks/tools/install-kubectl/), also known as `kubectl`
 
-# AKS cluster deployment configuration
+# EKS cluster deployment configuration
 For this EKS deployment, the Terraform configuration is broken into 7 files: eks_cluster.tf, variables.tf, vpc.tf, security-groups.tf, main.tf, terraform.tf, output.tf
 
 **providers.tf** sets versions for the providers used by the configuration. Add the following code in this file: 
