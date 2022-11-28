@@ -4,7 +4,7 @@ type: docs
 weight: 2
 hide_summary: true
 description: >
-    Learn how to Provision EKS cluster on Arm-based instance using Terraform.
+    Learn how to provision EKS cluster on Arm-based instance using Terraform.
 ---
 # Prerequisites
 * An [AWS account](https://portal.aws.amazon.com/billing/signup?nc2=h_ct&src=default&redirect_url=https%3A%2F%2Faws.amazon.com%2Fregistration-confirmation#/start)
