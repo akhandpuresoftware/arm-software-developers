@@ -3,7 +3,7 @@
 #       Edit
 # ================================================================================
 
-title: "Deploying Elastic Kubernetes Service"
+title: "Deploy WordPress with MySQL on Elastic Kubernetes Service"
 # Should start with a verb (learn, build, etc.), have no adjectives (amazing, cool, etc.), and be as concise as possible.
 
 description: >
